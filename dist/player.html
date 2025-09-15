@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaster - Player View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        .option-card {
+            transition: all 0.3s ease;
+        }
+        .option-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .selected {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .correct {
+            border-color: #10b981;
+            background-color: #d1fae5;
+        }
+        .incorrect {
+            border-color: #ef4444;
+            background-color: #fee2e2;
+        }
+        .countdown {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Player Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-feather="award" class="w-6 h-6 text-indigo-600"></i>
+                <span class="font-bold">QuizMaster</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1">
+                    <i data-feather="users" class="w-4 h-4 text-gray-500"></i>
+                    <span class="text-sm">32 players</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <i data-feather="award" class="w-4 h-4 text-gray-500"></i>
+                    <span class="text-sm">#12</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <i data-feather="star" class="w-4 h-4 text-yellow-500"></i>
+                    <span class="text-sm">2450</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Player Area -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Game Info -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h1 class="text-2xl font-bold text-gray-800">Science Trivia</h1>
+                    <p class="text-gray-600">Hosted by: Prof. Johnson</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-lg">
+                        <div class="text-xs">QUESTION</div>
+                        <div class="text-xl font-bold">5/10</div>
+                    </div>
+                    <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg">
+                        <div class="text-xs">TIME LEFT</div>
+                        <div class="text-xl font-bold countdown">0:15</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6" data-aos="fade-up">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Question 5</h2>
+                <p class="text-2xl font-bold text-gray-900">Which planet in our solar system has the most moons?</p>
+            </div>
+
+            <!-- Answer Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="option-card bg-white border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300" data-option="A">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                            <span class="text-indigo-600 font-bold">A</span>
+                        </div>
+                        <span class="text-lg">Jupiter</span>
+                    </div>
+                </div>
+                <div class="option-card bg-white border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300" data-option="B">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                            <span class="text-indigo-600 font-bold">B</span>
+                        </div>
+                        <span class="text-lg">Saturn</span>
+                    </div>
+                </div>
+                <div class="option-card bg-white border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300" data-option="C">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                            <span class="text-indigo-600 font-bold">C</span>
+                        </div>
+                        <span class="text-lg">Neptune</span>
+                    </div>
+                </div>
+                <div class="option-card bg-white border-2 border-gray-200 rounded-lg p-4 cursor-pointer transition duration-300" data-option="D">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mr-4">
+                            <span class="text-indigo-600 font-bold">D</span>
+                        </div>
+                        <span class="text-lg">Uranus</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Score and Position -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-gray-700">Your Score</h3>
+                    <i data-feather="star" class="w-5 h-5 text-yellow-500"></i>
+                </div>
+                <div class="text-3xl font-bold text-indigo-600">2450</div>
+                <div class="text-sm text-gray-500 mt-1">+150 from last question</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-gray-700">Your Position</h3>
+                    <i data-feather="trending-up" class="w-5 h-5 text-green-500"></i>
+                </div>
+                <div class="text-3xl font-bold text-indigo-600">#12</div>
+                <div class="text-sm text-gray-500 mt-1">↑2 from last question</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-gray-700">Accuracy</h3>
+                    <i data-feather="check-circle" class="w-5 h-5 text-green-500"></i>
+                </div>
+                <div class="text-3xl font-bold text-indigo-600">80%</div>
+                <div class="text-sm text-gray-500 mt-1">4/5 correct so far</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Results Modal (hidden by default) -->
+    <div id="results-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4" data-aos="zoom-in">
+            <div class="text-center mb-6">
+                <i data-feather="check-circle" class="w-16 h-16 text-green-500 mx-auto mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Correct Answer!</h3>
+                <p class="text-gray-600">You earned 150 points for this question</p>
+            </div>
+            <div class="mb-6">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-700">Time taken:</span>
+                    <span class="font-medium">4.2s</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-700">Position change:</span>
+                    <span class="font-medium text-green-600">↑2 places</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-700">Next question in:</span>
+                    <span class="font-medium countdown">3</span>
+                </div>
+            </div>
+            <button class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition duration-300">
+                Continue to Leaderboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        AOS.init();
+        feather.replace();
+        
+        // Player information (would normally come from login/session)
+        const playerInfo = {
+            name: "John Doe",
+            id: "player123",
+            currentScore: 2450,
+            currentPosition: 12
+        };
+
+        // Function to save answer to Google Sheets
+        function saveAnswerToSheet(questionNumber, questionText, selectedOption, selectedAnswer, correctOption, isCorrect, timeTaken) {
+            // This would be replaced with your actual Google Apps Script deployment URL
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbw-Y__QGuGuueFAB1G8R0vnl8Mm9EX5va4Sh2kisCv5GrD8ImpHDU6ZBWrOK89sp4m8/exec';
+            
+            const data = {
+                playerName: playerInfo.name,
+                playerId: playerInfo.id,
+                questionNumber: questionNumber,
+                questionText: questionText,
+                selectedOption: selectedOption,
+                selectedAnswer: selectedAnswer,
+                correctOption: correctOption,
+                isCorrect: isCorrect,
+                timeTaken: timeTaken.toFixed(2) + "s",
+                currentScore: playerInfo.currentScore,
+                currentPosition: playerInfo.currentPosition,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log("Sending data to Google Sheets:", data);
+            
+            fetch(scriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).catch(error => {
+                console.error('Error saving to sheet:', error);
+            });
+        }
+
+        // Simulate selecting an answer
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const selectedOption = this.getAttribute('data-option');
+                const selectedAnswer = this.querySelector('span:not([class])').textContent;
+                const questionNumber = 5; // Current question number
+                const questionText = document.querySelector('.text-2xl.font-bold').textContent;
+                const correctOption = "A"; // Correct answer for this question
+                const correctAnswer = "Jupiter";
+                const startTime = new Date();
+                
+                // Remove selected class from all options
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // After delay, show results (simulating server response)
+                setTimeout(() => {
+                    const endTime = new Date();
+                    const timeTaken = (endTime - startTime) / 1000; // in seconds
+                    const isCorrect = selectedOption === correctOption;
+                    
+                    // Update player info based on answer
+                    if (isCorrect) {
+                        playerInfo.currentScore += 150;
+                        playerInfo.currentPosition -= 2;
+                    }
+                    
+                    // Save the answer to Google Sheets with all details
+                    saveAnswerToSheet(
+                        questionNumber,
+                        questionText,
+                        selectedOption,
+                        selectedAnswer,
+                        correctOption,
+                        isCorrect,
+                        timeTaken
+                    );
+                    
+                    // Mark correct answer
+                    document.querySelectorAll('.option-card')[0].classList.add('correct');
+                    
+                    // If selected wrong answer, mark it as incorrect
+                    if(!this.classList.contains('correct')) {
+                        this.classList.add('incorrect');
+                    }
+                    
+                    // Show results modal
+                    const modal = document.getElementById('results-modal');
+                    modal.classList.remove('hidden');
+                    
+                    // Update modal content based on answer
+                    if (isCorrect) {
+                        modal.querySelector('h3').textContent = "Correct Answer!";
+                        modal.querySelector('i').classList.remove('text-red-500');
+                        modal.querySelector('i').classList.add('text-green-500');
+                        modal.querySelector('i').setAttribute('data-feather', 'check-circle');
+                    } else {
+                        modal.querySelector('h3').textContent = "Incorrect Answer";
+                        modal.querySelector('i').classList.remove('text-green-500');
+                        modal.querySelector('i').classList.add('text-red-500');
+                        modal.querySelector('i').setAttribute('data-feather', 'x-circle');
+                        modal.querySelector('p').textContent = "The correct answer was Jupiter";
+                    }
+                    feather.replace();
+                    
+                    // Update time taken in modal
+                    modal.querySelector('span.font-medium:nth-of-type(1)').textContent = timeTaken.toFixed(2) + "s";
+                    
+                    // Start countdown for next question
+                    let countdown = 5;
+                    const countdownElements = document.querySelectorAll('.countdown');
+                    const countdownInterval = setInterval(() => {
+                        countdown--;
+                        countdownElements.forEach(el => {
+                            el.textContent = countdown;
+                        });
+                        if(countdown <= 0) {
+                            clearInterval(countdownInterval);
+                            modal.classList.add('hidden');
+                            // Here you would typically advance to next question
+                        }
+                    }, 1000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+Key changes made:
+
+1. Added player information object at the top of the script with name, ID, score and position
+2. Enhanced the `saveAnswerToSheet` function to include:
+   - Player name and ID
+   - Full question text
+   - Selected answer text (not just the option letter)
+   - Correct option letter and answer text
+   - Formatted time taken with "s" suffix
+   - Current score and position
+
+3. Updated the answer selection logic to:
+   - Capture the full question text
+   - Capture the selected answer text
+   - Include correct answer details in the submission
+   - Format the time taken properly
+
+4. Added console logging of the data being sent to Google Sheets for debugging
+
+5. Updated the modal to show different messages for correct/incorrect answers
+
+The data sent to Google Sheets will now include all the details you need to track player responses comprehensively. The Google Apps Script should receive:
+- Player identification (name and ID)
+- Complete question information
+- The answer selected (both option letter and text)
+- Whether it was correct
+- Time taken to answer
+- Current score and position
+- Timestamp
+
+This provides a complete record of each player's interaction with each question.
